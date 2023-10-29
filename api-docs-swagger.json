@@ -1,0 +1,582 @@
+{
+    "swagger":"2.0",
+    "info":{
+        "title":"social media Api",
+        "description":"handles all the social media queries",
+        "version":"1.0.0."
+    },
+    "host":"localhost:3000",
+    "schemes":"http",
+    "paths":{
+        "/api/users/signup":{
+            "post":{
+                "tags":["Users"],
+                "summary":"creates a new user",
+                "description":"creates a new user",
+                "consumes":["multipart/form-data"],
+                "parameters":[
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "type": "string",
+                        "description": " name of the user",
+                        "required": true
+                    },
+                    {
+                    "in":"formData",
+                    "name":"profileImage",
+                    "description":"to add user profile image",
+                    "type":"file",
+                    "required": true
+                },{
+                    "name": "email",
+                    "in": "formData",
+                    "type": "string",
+                    "description": "email id of the user",
+                    "required": true
+                },{
+                    "name": "password",
+                    "in": "formData",
+                    "type": "string",
+                    "description": "password  of the user",
+                    "required": true
+                }
+                
+                ],
+                "responses":{
+                    "200":{
+                        "description":"user created successfully"
+                    },
+                    "400":{
+                        "description":"user already exists"
+                    }
+                }
+            }
+        },
+        "/api/users/signin":{
+            "post":{
+                "tags": ["Users"],
+                "summary":"existed user to sigin",
+                "description":"creates an jwt cookie for authotication",
+                "parameters":[
+                    {
+                        "in":"body",
+                        "name":"body",
+                        "description":"to sigin",
+                        "required": true,
+                        "schema":{
+                            "type":"object",
+                            "properties":{
+                                "email":{
+                                    "type":"string"
+                                },
+                                "password":{
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"OK"
+                    },
+                    "400":{
+                        "description":"unable signin"
+                    }
+                }
+            }
+        },
+        "/api/users/logout":{
+            "get":{
+                "tags": ["Users"],
+                "summary":"to logout from this device",
+                "description":"removes an jwt cookie for authotication",
+                "responses":{
+                    "200":{
+                        "description":"OK"
+                    },
+                    "400":{
+                        "description":"not signed properly"
+                    }
+                }
+            }
+        },
+        "/api/users/logout-all-devices":{
+            "get":{
+                "tags": ["Users"],
+                "summary":"to logout from all the devices",
+                "description":"logout from all the devices",
+                "responses":{
+                    "200":{
+                        "description":"OK"
+                    },
+                    "400":{
+                        "description":"not signed properly"
+                    }
+                }
+            }
+        },
+        "/api/users/get-details/{userId}":{
+            "get":{
+                "tags": ["Users"],
+                "summary":"to get the details of the user",
+                "description":"to retrive information of the user using id",
+                "parameters": [
+                    {
+                      "name": "userId",
+                      "in": "path",
+                      "type": "string",
+                      "required": true,
+                      "description": "The ID of the user"
+                    }
+                  ],
+                "responses":{
+                    "200":{
+                        "description":"OK"
+                    },
+                    "400":{
+                        "description":"not signed properly or user not found"
+                    }
+                }
+            }
+        },
+        "/api/users/get-all-details":{
+            "get":{
+                "tags": ["Users"],
+                "summary":"all the users details",
+                "description":"all the users details",
+                "responses":{
+                    "200":{
+                        "description":"OK"
+                    },
+                    "400":{
+                        "description":"not signed properly"
+                    }
+                }
+            }
+        },
+        "/api/users/update-details":{
+            "put":{
+                "tags":["Users"],
+                "summary":"updating the user details",
+                "description":"updating the user details",
+                "consumes":["multipart/form-data"],
+                "parameters":[
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "type": "string",
+                        "description": " name of the user do you want to update"
+                    },
+                    {
+                    "in":"formData",
+                    "name":"profileImage",
+                    "description":"to change the user profile image",
+                    "type":"file"
+                } 
+                ],
+                "responses":{
+                    "200":{
+                        "description":"user updated details successfully"
+                    },
+                    "400":{
+                        "description":"user may not exist or not signed properly or data may not provided"
+                    }
+                }
+            }
+        },
+        "/api/posts":{
+            "post":{
+                "tags":["Posts"],
+                "summary":"posts the post",
+                "description":"keep the posts in users post",
+                "consumes":["multipart/form-data"],
+                "parameters":[
+                    {
+                        "name": "caption",
+                        "in": "formData",
+                        "type": "string",
+                        "description": "caption of the post",
+                        "required": true
+                    },
+                    {
+                    "in":"formData",
+                    "name":"postImage",
+                    "description":"image of the post",
+                    "type":"file",
+                    "required": true
+                } 
+                ],
+                "responses":{
+                    "200":{
+                        "description":"user updated details successfully"
+                    },
+                    "400":{
+                        "description":"user may not exist or not signed properly or data may not provided"
+                    }
+                }
+            },
+            "get":{
+                "tags": ["Posts"],
+                "summary":"get the all the posts that are post by signed user",
+                "description":"get the all the post that are post by signed user",
+                "responses":{
+                    "200":{
+                        "description":"OK"
+                    },
+                    "400":{
+                        "description":"not signed properly or post not found"
+                    }
+                }
+            }
+        },
+        "/api/posts/all":{
+            "get":{
+                "tags": ["Posts"],
+                "summary":"get the all the posts",
+                "description":"get the all the post",
+                "responses":{
+                    "200":{
+                        "description":"OK"
+                    },
+                    "400":{
+                        "description":"not signed properly"
+                    }
+                }
+            }
+        },
+        "/api/posts/{postId}":{
+            "get":{
+                "tags": ["Posts"],
+                "summary":"to get the details of the post",
+                "description":"to retrive information of the post using id",
+                "parameters": [
+                    {
+                      "name": "postId",
+                      "in": "path",
+                      "type": "string",
+                      "required": true,
+                      "description": "The ID of the post"
+                    }
+                  ],
+                "responses":{
+                    "200":{
+                        "description":"OK"
+                    },
+                    "400":{
+                        "description":"not signed properly or post not found"
+                    }
+                }
+            },
+            "delete":{
+                "tags": ["Posts"],
+                "summary":"to delete the post",
+                "description":"to delete the post using id",
+                "parameters": [
+                    {
+                      "name": "postId",
+                      "in": "path",
+                      "type": "string",
+                      "required": true,
+                      "description": "The ID of the post"
+                    }
+                  ],
+                "responses":{
+                    "200":{
+                        "description":"OK"
+                    },
+                    "400":{
+                        "description":"not signed properly or post not found"
+                    }
+                }
+            },
+            "put":{
+                "tags": ["Posts"],
+                "summary":"update an  details of the post",
+                "description":"update an  details of the post",
+                "consumes":"multipart/form-data",
+                "parameters": [
+                    {
+                      "name": "postId",
+                      "in": "path",
+                      "type": "string",
+                      "required": true,
+                      "description": "The ID of the post"
+                    },
+                    {
+                        "name": "caption",
+                        "in": "formData",
+                        "type": "string",
+                        "description": "caption of the post"
+                    },
+                    {
+                    "in":"formData",
+                    "name":"postImage",
+                    "description":"image of the post",
+                    "type":"file"
+                } 
+                  ],
+                "responses":{
+                    "200":{
+                        "description":"OK"
+                    },
+                    "400":{
+                        "description":"post is not found"
+                    }
+                }
+            }
+        },
+        "/api/likes/toggle/{postId}":{
+            "get":{
+                "tags": ["Likes"],
+                "summary":"to like or dislike the post",
+                "description":"to toogle the post like",
+                "parameters": [
+                    {
+                      "name": "postId",
+                      "in": "path",
+                      "type": "string",
+                      "required": true,
+                      "description": "The ID of the post"
+                    }
+                  ],
+                "responses":{
+                    "200":{
+                        "description":"OK"
+                    },
+                    "400":{
+                        "description":"not signed properly or post not found"
+                    }
+                }
+            }
+        },
+        "/api/likes/{postId}":{
+            "get":{
+                "tags": ["Likes"],
+                "summary":"to get the all the likes of the post",
+                "description":"to get the all the likes of the post",
+                "parameters": [
+                    {
+                      "name": "postId",
+                      "in": "path",
+                      "type": "string",
+                      "required": true,
+                      "description": "The ID of the post"
+                    }
+                  ],
+                "responses":{
+                    "200":{
+                        "description":"OK"
+                    },
+                    "400":{
+                        "description":"not signed properly or post not found"
+                    }
+                }
+            }
+        },
+        "/api/friends/toggle-friendship/{friendId}":{
+            "get":{
+                "tags": ["Friends"],
+                "summary":"to toogle the friend request or to remove the friend",
+                "description":"to toogle the friend request or to remove the friend \n if the friend  is already sent then it will remove the friend  \n if the friend request is not sent then it will send the friend request",
+                "parameters": [
+                    {
+                      "name": "friendId",
+                      "in": "path",
+                      "type": "string",
+                      "required": true,
+                      "description": "The ID of the friend"
+                    }
+                  ],
+                "responses":{
+                    "200":{
+                        "description":"OK"
+                    },
+                    "400":{
+                        "description":"not signed properly or friend is not found"
+                    }
+                }
+            }
+        },
+        "/api/friends/response-to-request/{friendId}":{
+            "post":{
+                "tags": ["Friends"],
+                "summary":"to approve the friend request or to disapprove the friend request",
+                "description":"to approve the friend request or to disapprove the friend request",
+                "parameters": [
+                    {
+                      "name": "friendId",
+                      "in": "path",
+                      "type": "string",
+                      "required": true,
+                      "description": "The ID of the friend"
+                    },
+                    {
+                        "in":"body",
+                        "name":"body",
+                        "description":"to aprove the comment",
+                        "required": true,
+                        "schema":{
+                            "type":"object",
+                            "properties":{
+                                "isApproved":{
+                                    "type":"boolean"
+                                }
+                            }
+                        }
+                    }
+                  ],
+                "responses":{
+                    "200":{
+                        "description":"OK"
+                    },
+                    "400":{
+                        "description":"not signed properly or friend is not found"
+                    }
+                }
+            }
+        },
+        "/api/friends/get-pending-requests":{
+            "get":{
+                "tags": ["Friends"],
+                "summary":"get all the friend requests that are not approved ",
+                "description":"get all the friend requests that are not approved ",
+                "responses":{
+                    "200":{
+                        "description":"OK"
+                    },
+                    "400":{
+                        "description":"not signed properly or user is not found"
+                    }
+                }
+            }
+        },
+        "/api/friends/get-friends/{userId}":{
+            "get":{
+                "tags": ["Friends"],
+                "summary":"get all the friend ",
+                "description":"get all the friend of the given id",
+                "parameters": [
+                    {
+                      "name": "userId",
+                      "in": "path",
+                      "type": "string",
+                      "required": true,
+                      "description": "The ID of the friend"
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"OK"
+                    },
+                    "400":{
+                        "description":"not signed properly or user id is not found"
+                    }
+                }
+            }
+        },
+        "/api/otp/send":{
+            "post":{
+                "tags": ["Otp"],
+                "summary":"to send the otp to the given email",
+                "description":"to send the otp to the given email",
+                "parameters": [
+                    {
+                        "in":"body",
+                        "name":"body",
+                        "description":"provide the email to send the otp",
+                        "required": true,
+                        "schema":{
+                            "type":"object",
+                            "properties":{
+                                "email":{
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    }
+                  ],
+                "responses":{
+                    "200":{
+                        "description":"OK"
+                    },
+                    "400":{
+                        "description":"email may not be found"
+                    }
+                }
+            }
+        },
+        "/api/otp/verify":{
+            "post":{
+                "tags": ["Otp"],
+                "summary":"to verify the otp to the given email",
+                "description":"to verify the otp to the given email",
+                "parameters": [
+                    {
+                        "in":"body",
+                        "name":"body",
+                        "description":"provide the email and otp to verify",
+                        "required": true,
+                        "schema":{
+                            "type":"object",
+                            "properties":{
+                                "email":{
+                                    "type":"string"
+                                },
+                                "otp":{
+                                    "type":"number"
+                                }
+                            }
+                        }
+                    }
+                  ],
+                "responses":{
+                    "200":{
+                        "description":"OK"
+                    },
+                    "400":{
+                        "description":"email may not be found with signuped users"
+                    }
+                }
+            }
+        },
+        "/api/otp/reset-password":{
+            "put":{
+                "tags": ["Otp"],
+                "summary":"to reset the password using otp to the given email",
+                "description":"to reset the password using otp to the given email",
+                "parameters": [
+                    {
+                        "in":"body",
+                        "name":"body",
+                        "description":"provide the email ,otp to verify and password to reset ",
+                        "required": true,
+                        "schema":{
+                            "type":"object",
+                            "properties":{
+                                "email":{
+                                    "type":"string"
+                                },
+                                "otp":{
+                                    "type":"number"
+                                },
+                                "password":{
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    }
+                  ],
+                "responses":{
+                    "200":{
+                        "description":"OK"
+                    },
+                    "400":{
+                        "description":"email may not be found with signuped users"
+                    }
+                }
+            }
+        }
+    }
+}
