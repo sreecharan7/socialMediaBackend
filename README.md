@@ -5,7 +5,7 @@ This is the  social media backend with the mongodb
 
 steps to install:
 
-1)install nodejs and npm
+1)install nodejs, npm and mongodb
 
 2)open in the terminal  code folder(package.json location) run code (npm install)
 
